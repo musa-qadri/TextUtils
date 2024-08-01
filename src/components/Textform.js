@@ -22,10 +22,9 @@ export default function Textform(props) {
   }
 
   const handleCopy = () => {
-    var text = document.getElementById('myBox')
-    text.select();
-    navigator.clipboard.writeText(text.value);
-    props.showAlert('Copy Text' , 'success')
+
+    navigator.clipboard.writeText(text);
+    props.showAlert('Text copy to clipboard !' , 'success')
     
 
   }
@@ -49,27 +48,27 @@ export default function Textform(props) {
         <h1>{props.heading}</h1>
         <div className="mb-3">
           <textarea
-            className="form-control" style={{ backgroundColor: props.mode == 'light' ? 'white' : 'gray', color: props.mode == 'light' ? 'black' : 'white' }} value={text} onChange={handleOnChange} id="myBox" rows="8" defaultValue={""}>
+            className="form-control" style={{ backgroundColor: props.mode == 'light' ? 'white' : '#00006c', color: props.mode == 'light' ? 'black' : 'white' }} value={text} onChange={handleOnChange} id="myBox" rows="8" defaultValue={""}>
           </textarea>
         </div>
-        <div className="d-flex  gap-2">
-          <button className="btn btn-primary" onClick={handleUpClick}>Convert To UpperCase</button>
+        <div className="d-flex  flex-wrap ">
+          <button disabled={text.length===0} className=" btn btn-primary mx-1 my-1" onClick={handleUpClick}>Convert To UpperCase</button>
 
-          <button className="btn btn-primary" onClick={handleDowmClick}>Convert To LowerCase</button>
+          <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleDowmClick}>Convert To LowerCase</button>
 
-          <button className="btn btn-primary" onClick={handleClear}>Clear</button>
+          <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleClear}>Clear</button>
 
-          <button className="btn btn-primary" onClick={handleClearExtraGap}>Remove Extra Gap</button>
+          <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleClearExtraGap}>Remove Extra Gap</button>
 
-          <button className="btn btn-primary" onClick={handleCopy}>Copy</button>
+          <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy</button>
 
         </div>
       </div>
 
       <div className="container my-4">
         <h2>your Text Summary</h2>
-        <p>{text.split(' ').length} words and {text.length} Characters</p>
-        <p>{0.008 * text.split(' ').length} Minuts Read</p>
+        <p>{text.split(/\s+/).filter((element)=>{return element.length!==0}).length} words and {text.length} Characters</p>
+        <p>{0.008 * text.split(' ').filter((element)=>{return element.length!=0}).length} Minuts Read</p>
         <h2>Preview</h2>
         <p>
           {text.length > 0 ? text : 'Enter Something in the textBox above to preview it'}
